@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+
+	<title>Vietnamese Speech to Text</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Latest compiled and minified Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+<body>
+	<h1>Vietnamese Speech to Text</h1>
+	<div id="record">
+		<h2>Input:</h2>
+		<h3>1. From files</h3>
+		<div id="record" style="padding-bottom: 2rem;">
+			<input type="file" id="wav" accept=".wav" style="display: none;">
+			<button class="ulBtn" onclick="uploadWav()">WAV</button>
+			<input type="file" id="mp3" accept=".mp3" style="display: none;">
+			<button class="ulBtn" onclick="uploadMp3()">MP3</button>
+			<input type="file" id="flac" accept=".flac" style="display: none;">
+			<button class="ulBtn" onclick="uploadFlac()">FLAC</button>
+		</div>
+		<h3>2. Record audio</h3>
+		<div id="controls">
+			<button id="recordButton">Record</button>
+		</div>
+		<div id="formats"></div>
+		<pre>Log</pre> -->
+		<pre id="log">Loging...</pre>
+{#		<h3>3. Streaming</h3>#}
+{#		<div id="controls">#}
+{#			<button id="streamButton">Record</button>#}
+{#		</div>#}
+	</div>
+	<div id="record" style="width: 30rem;">
+		<h2>Results</h2>
+		<div id="progress" style="display: none;padding-bottom: 20px;">
+			<div class="loader" style="float: left; padding-right: 20px;"></div>
+			<p style="padding-top: 30px; margin-left: 100px;">Processing...</p>
+		</div>
+		<h3>Transcripts</h3>
+		<textarea id="textTrans" readonly></textarea>
+		<h3>Audio</h3>
+		<div id="recordAudio"></div>
+		
+	</div>
+	<!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+	<script src="/static/js/WebAudioRecorder.min.js"></script>
+	<script src="/static/js/demo.js"></script>
+
+</body>
+</html>
