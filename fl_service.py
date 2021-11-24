@@ -21,9 +21,9 @@ class FlashlightModel:
                   --beam_size_token=30 \
                   --beam_threshold=100 \
                   --lm_weight=1.5 \
-                  --word_score=0""" % (self.w2l_bin, os.path.join(self.model_path, "002_model_last.bin"),
-                                       os.path.join(self.model_path, "train-all-unigram-3557.tokens"),
-                                       os.path.join(self.model_path, "unigram-3557-nbest10.lexicon"),
+                  --word_score=0""" % (self.w2l_bin, os.path.join(self.model_path, "am.bin"),
+                                       os.path.join(self.model_path, "unigram.tokens"),
+                                       os.path.join(self.model_path, "unigram_nbest10.lexicon"),
                                        os.path.join(self.model_path, "lm.bin")
                                        )
         # print(inference_cmd)
