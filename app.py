@@ -9,6 +9,7 @@ app.secret_key = "abc_xyz"
 model_path = None
 w2l = None
 app.config['UPLOAD_FOLDER'] = os.getcwd() + '/static/audios/'
+transcript_file = os.getcwd() + '/static/transcript.txt'
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.mkdir(app.config['UPLOAD_FOLDER'])
 
@@ -35,11 +36,15 @@ def recog_file():
         if file_path.split(".")[-1] != "wav":
             file_path = convert_to_wav(file_path)
         text = w2l.process_file(file_path)
+        global transcript_file
+        with open(transcript_file, "a+", encoding="UTF-8") as f_write:
+            f_write.write(file_path+"\t"+text+"\n")
         return text
 
 if __name__ == "__main__":
     model_path = sys.argv[1]
     w2l = FlashlightModel(model_path)
     app.debug = True
+    app.run(host="0.0.0.0", port=5555)
     # app.run(host="0.0.0.0", port=5555, ssl_context=('cert.pem', 'key.pem'))
-    app.run(host="0.0.0.0", port=5555, use_reloader=False, ssl_context=('cert.pem', 'key.pem'))
+    # app.run(host="0.0.0.0", port=5555, use_reloader=False, ssl_context=('cert.pem', 'key.pem'))

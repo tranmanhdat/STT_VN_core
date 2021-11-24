@@ -229,3 +229,10 @@ table {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+textarea
+{
+   font-family:"Times New Roman", Times, serif;
+   font-size: 20px;
+  height: 18em;
+  width: 60em;
+}
