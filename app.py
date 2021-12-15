@@ -33,8 +33,8 @@ def recog_file():
         # or save it permanently to the file system
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], static_file.filename)
         static_file.save(file_path)
-        if file_path.split(".")[-1] != "wav":
-            file_path = convert_to_wav(file_path)
+        # if file_path.split(".")[-1] != "wav":
+        file_path = convert_to_wav(file_path)
         text = w2l.process_file(file_path)
         global transcript_file
         with open(transcript_file, "a+", encoding="UTF-8") as f_write:
