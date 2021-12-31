@@ -2,7 +2,8 @@ from flask import Flask, request
 from flask import render_template
 from fl_service import FlashlightModel
 import sys, os
-from pydub import AudioSegment
+from audio_process import process_file, merger_texts
+import argparse
 
 app = Flask(__name__)
 app.secret_key = "abc_xyz"
@@ -16,15 +17,8 @@ if not os.path.exists(app.config['UPLOAD_FOLDER']):
 @app.route("/", methods=['POST', 'GET'])
 def index():
     return render_template("demo.html")
-def convert_to_wav(filepath):
-    print("converting....")
-    new_name = filepath.split(".")[0]+"_.wav"
-    wav_file = AudioSegment.from_file(file=filepath)
-    wav_file = wav_file.set_frame_rate(16000)
-    wav_file = wav_file.set_sample_width(2)
-    wav_file = wav_file.set_channels(1)
-    wav_file.export(new_name, bitrate="256", format='wav')
-    return new_name
+
+
 @app.route('/recog', methods=['GET', 'POST'])
 def recog_file():
     if request.method == 'POST':
@@ -34,17 +28,26 @@ def recog_file():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], static_file.filename)
         static_file.save(file_path)
         # if file_path.split(".")[-1] != "wav":
-        file_path = convert_to_wav(file_path)
-        text = w2l.process_file(file_path)
+        audio_path_list = process_file(file_path)
+        texts = []
+        for audio_path in audio_path_list:
+            texts.append(w2l.process_file(audio_path))
+        text = merger_texts(texts)
         global transcript_file
         with open(transcript_file, "a+", encoding="UTF-8") as f_write:
             f_write.write(file_path+"\t"+text+"\n")
         return text
 
 if __name__ == "__main__":
-    model_path = sys.argv[1]
-    w2l = FlashlightModel(model_path)
-    app.debug = True
-    app.run(host="0.0.0.0", port=5555)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-m", "--model_path", type=str, default=None, help="model path", required=True)
+    parser.add_argument("-p", "--port", type=int, default=5555, help="port")
+    parser.add_argument("-d", "--debug", action="store_true", help="debug mode", default=True)
+    parser.add_argument("-t", "--type", type=int, default=0, help="type of language run, 0 for vn and en, 1 for vn, 2 for en")
+    args = parser.parse_args()
+    # model_path = args.model_path
+    w2l = FlashlightModel(args.model_path, args.type)
+    app.debug = args.debug
+    app.run(host="0.0.0.0", port=args.port)
     # app.run(host="0.0.0.0", port=5555, ssl_context=('cert.pem', 'key.pem'))
     # app.run(host="0.0.0.0", port=5555, use_reloader=False, ssl_context=('cert.pem', 'key.pem'))

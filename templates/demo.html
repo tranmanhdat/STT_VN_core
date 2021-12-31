@@ -10,7 +10,7 @@
 </head>
 <body>
 	<h1>Vietnamese Speech to Text</h1>
-	<div id="record">
+	<div id="record" style="width: 30%;">
 		<h2>Input:</h2>
 		<h3>1. From files</h3>
 		<div id="record" style="padding-bottom: 2rem;">
@@ -28,20 +28,19 @@
 		<div id="formats"></div>
 		<pre>Log</pre> -->
 		<pre id="log">Loging...</pre>
-{#		<h3>3. Streaming</h3>#}
-{#		<div id="controls">#}
-{#			<button id="streamButton">Record</button>#}
-{#		</div>#}
+		<!-- <h3>3. Streaming</h3>
+		<div id="controls">
+			<button id="streamButton">Record</button>
+		</div> -->
 	</div>
-	<div id="record" style="width: 30rem;">
+	<div id="record" style="width: 70%;">
 		<h2>Results</h2>
 		<div id="progress" style="display: none;padding-bottom: 20px;">
 			<div class="loader" style="float: left; padding-right: 20px;"></div>
 			<p style="padding-top: 30px; margin-left: 100px;">Processing...</p>
 		</div>
 		<h3>Transcripts</h3>
-		<textarea id="textTrans" readonly rows="5" cols="50"
-                          style="font-size: 30pt"></textarea>
+		<textarea id="textTrans" readonly></textarea>
 		<h3>Audio</h3>
 		<div id="recordAudio"></div>
 		

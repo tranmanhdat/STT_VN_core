@@ -128,3 +128,6 @@ dmypy.json
 # Pyre type checker
 .pyre/
 /static/model/
+.idea/*
+static/audios/
+static/transcript.txt
