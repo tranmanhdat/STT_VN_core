@@ -11,7 +11,6 @@ class FlashlightModel:
         self.w2l_bin = "/root/flashlight/build/bin/asr/fl_asr_tutorial_inference_ctc"
         if type==0 or type==1:
             self.vn_model_path = os.path.join(model_path, "vn_model")
-            print(self.vn_model_path)
             inference_cmd = """%s \
                     --am_path=%s \
                     --tokens_path=%s \

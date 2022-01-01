@@ -26,7 +26,7 @@ def process_file(filepath):
     os.makedirs(base_name, exist_ok=True)
     audio = AudioSegment.from_wav(new_name)
     audio_chunks = split_on_silence(audio, min_silence_len=1000, silence_thresh=-40, keep_silence=300)
-    print(len(audio_chunks))
+    # print(len(audio_chunks))
     audio_path_list = []
     min_length = 7*1000
     max_length = 15*1000

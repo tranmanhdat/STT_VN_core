@@ -23,6 +23,7 @@ def index():
 def recog_file():
     if request.method == 'POST':
         static_file = request.files['the_file']
+        language = int(request.form['language'])
         # here you can send this static_file to a storage service
         # or save it permanently to the file system
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], static_file.filename)
@@ -31,7 +32,7 @@ def recog_file():
         audio_path_list = process_file(file_path)
         texts = []
         for audio_path in audio_path_list:
-            texts.append(w2l.process_file(audio_path))
+            texts.append(w2l.process_file(audio_path, type=language))
         text = merger_texts(texts)
         global transcript_file
         with open(transcript_file, "a+", encoding="UTF-8") as f_write:

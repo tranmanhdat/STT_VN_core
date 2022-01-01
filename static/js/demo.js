@@ -272,8 +272,10 @@ function createDownloadLink(blob,encoding) {
 			document.getElementById("progress").style.display = 'none'
         }
     };
+	var radioValue = document.querySelector("input[name='language']:checked").value;
     var fd=new FormData();
     fd.append("the_file",blob, filename);
+	fd.append("language",radioValue);
     xhr.open("POST","/recog",true);
 	xhr.send(fd);
 	document.getElementById("progress").style.display = 'block'
@@ -326,8 +328,11 @@ function handleUploadFile()
 			document.getElementById("progress").style.display = 'none'
         }
     };
+	var radioValue = document.querySelector("input[name='language']:checked").value;
+	// console.log(radioValue)
 	var fd=new FormData();
     fd.append("the_file",file);
+	fd.append("language",radioValue);
     xhr.open("POST","/recog",true);
 	xhr.send(fd);
 	document.getElementById("progress").style.display = 'block'
