@@ -1,3 +1,4 @@
+from distutils.log import error
 from flask import Flask, request
 from flask import render_template
 from fl_service import FlashlightModel
@@ -11,6 +12,7 @@ model_path = None
 w2l = None
 app.config['UPLOAD_FOLDER'] = os.getcwd() + '/static/audios/'
 transcript_file = os.getcwd() + '/static/transcript.txt'
+error_log = os.getcwd() + '/static/error.txt'
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.mkdir(app.config['UPLOAD_FOLDER'])
 
@@ -29,15 +31,24 @@ def recog_file():
         file_path = os.path.join(app.config['UPLOAD_FOLDER'], static_file.filename)
         static_file.save(file_path)
         # if file_path.split(".")[-1] != "wav":
-        audio_path_list = process_file(file_path)
-        texts = []
-        for audio_path in audio_path_list:
-            texts.append(w2l.process_file(audio_path, type=language))
-        text = merger_texts(texts)
-        global transcript_file
-        with open(transcript_file, "a+", encoding="UTF-8") as f_write:
-            f_write.write(file_path+"\t"+text+"\n")
-        return text
+        try:
+            audio_path_list = process_file(file_path)
+            texts = []
+            for audio_path in audio_path_list:
+                texts.append(w2l.process_file(audio_path, type=language))
+            text = merger_texts(texts)
+            global transcript_file
+            with open(transcript_file, "a+", encoding="UTF-8") as f_write:
+                f_write.write(file_path+"\t"+text+"\n")
+            return text
+        except Exception as e:
+            global error_log
+            with open(error_log, "a+", encoding="UTF-8") as f_write:
+                f_write.write(file_path+"\t"+str(e)+"\n")
+            if type==1:
+                return "Không nhận diện được âm thanh"
+            else:
+                return "Cant recognize audio"
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
