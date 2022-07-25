@@ -42,8 +42,8 @@ class FlashlightModel:
                     --beam_threshold=100 \
                     --lm_weight=1.0 \
                     --word_score=0""" % (self.w2l_bin, os.path.join(self.en_model_path, "am_transformer_ctc_stride3_letters_70Mparams.bin"),
-                                        os.path.join(self.en_model_path, "en.tokens"),
-                                        os.path.join(self.en_model_path, "en.lexicon"),
+                                        os.path.join(self.en_model_path, "tokens.txt"),
+                                        os.path.join(self.en_model_path, "lexicon.txt"),
                                         os.path.join(self.en_model_path, "lm_common_crawl_small_4gram_prun0-6-15_200kvocab.bin")
                                         )
             self.asr_process_en = self.create_process(inference_cmd)
